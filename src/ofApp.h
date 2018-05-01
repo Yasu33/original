@@ -23,8 +23,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofSoundPlayer music;
-    
     float *volume;
     float circle_r[NUM]; //円の半径
     float circle_x[NUM]; //円のx座標
@@ -37,7 +35,12 @@ class ofApp : public ofBaseApp{
     int color_r[NUM];
     int color_g[NUM];
     int color_b[NUM];
+    int mesh_w; //メッシュの幅
+    int mesh_h; //メッシュの高さ
+    int mode; //切り替え
     
     ofEasyCam cam;
+    ofSoundPlayer music;
+    ofMesh mesh;
 		
 };

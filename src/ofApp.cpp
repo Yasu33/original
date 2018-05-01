@@ -7,11 +7,18 @@ void ofApp::setup(){
     music.setVolume(1);
     music.play();
     
-    ofSetFrameRate(60);
+    ofSetFrameRate(64);
     ofEnableAlphaBlending();
+    ofEnableDepthTest();
     
     gravity=0.15;
     friction=0.999;
+    
+    mode = 0;
+    
+    mesh_w = 256;
+    mesh_h = 256;
+    cam.setDistance(40);
     
     for (int i = 0; i<NUM; i++) {
         circle_x[i] = ofRandom(20, ofGetWidth()-20); //円のx座標の初期値
@@ -22,7 +29,12 @@ void ofApp::setup(){
         color_g[i] = ofRandom(100,255);
         color_b[i] = ofRandom(100,255);
         boundNum[i] = 0;
-
+    }
+    
+    for (int i = 0; i<mesh_w; i++) {
+        for (int j = 0; j<mesh_h; j++) {
+            mesh.addColor(ofColor(120, 200, 255));
+        }
     }
     
     ofBackground(10, 10, 10);
@@ -53,24 +65,65 @@ void ofApp::update(){
         }
         
     }
+    
+    mesh.clearVertices();
+    for (int i = 0; i < mesh_w; i++) {
+        for (int j = 0; j < mesh_h; j++) {
+            float mesh_x = sin(i*0.1)*volume[0]*400;
+            float mesh_y = sin(j*0.15)*volume[0]*100;
+            float mesh_z = mesh_x + mesh_y;
+            mesh.addVertex(ofVec3f(i-mesh_w/2, j-mesh_h/2, mesh_z));
+        }
+    }
+    
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
-    for (int i = 0; i<NUM; i++) {
-        if (boundNum[i] < 7) {
-            ofSetColor(color_r[i], color_g[i], color_b[i], 180-boundNum[i]*30); //円の色の設定
-            circle_r[i] = volume[0]*500; //円の半径の設定
-            ofDrawCircle(circle_x[i], circle_y[i], circle_r[i]); //円の描画
-        }
+    switch (mode) {
+        case 0:
+            for (int i = 0; i<NUM; i++) {
+                if (boundNum[i] < 7) {
+                    ofSetColor(color_r[i], color_g[i], color_b[i], 180-boundNum[i]*30); //円の色の設定
+                    circle_r[i] = volume[0]*500; //円の半径の設定
+                    ofDrawCircle(circle_x[i], circle_y[i], circle_r[i]); //円の描画
+                }
+            }
+            break;
+            
+        case 1:
+            cam.begin();
+            ofPushMatrix();
+            ofRotateX(ofGetFrameNum());
+            ofRotateY(ofGetFrameNum()/6);
+            ofRotateZ(ofGetFrameNum()/4);
+            glPointSize(1.0);
+            glEnable(GL_POINT_SMOOTH);
+            mesh.drawVertices();
+            ofPopMatrix();
+            cam.end();
+            
+        default:
+            break;
     }
+    
 
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    switch (key) {
+        case '0':
+            mode = 0;
+            break;
+        case '1':
+            mode = 1;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 //--------------------------------------------------------------
