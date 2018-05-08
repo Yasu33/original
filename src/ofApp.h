@@ -1,8 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-
-#define NUM 50
+#include "Balls.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -23,18 +22,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    float *volume;
-    float circle_r[NUM]; //円の半径
-    float circle_x[NUM]; //円のx座標
-    float circle_y[NUM]; //円のy座標
-    float speed_x[NUM]; //x軸方向のスピード
-    float speed_y[NUM]; //y軸方向のスピード
-    float gravity; //重力
-    float friction; //摩擦力
-    int boundNum[NUM]; //跳ね返った回数
-    int color_r[NUM];
-    int color_g[NUM];
-    int color_b[NUM];
     int mesh_w; //メッシュの幅
     int mesh_h; //メッシュの高さ
     int mode; //切り替え
@@ -42,5 +29,7 @@ class ofApp : public ofBaseApp{
     ofEasyCam cam;
     ofSoundPlayer music;
     ofMesh mesh;
+    
+    Balls ball;
 		
 };
