@@ -10,9 +10,12 @@ void ofApp::setup(){
     ofSetFrameRate(64);
     ofEnableAlphaBlending();
     ofEnableDepthTest();
-
     
-    ball.setup();
+    time_b = 0.0;
+    
+    
+    circle.push_back(*new Balls());
+    circle[0].setup();
     
     mode = 0;
     
@@ -22,22 +25,42 @@ void ofApp::setup(){
     
     for (int i = 0; i<mesh_w; i++) {
         for (int j = 0; j<mesh_h; j++) {
-            mesh.addColor(ofColor(120, 200, 255));
+            mesh.addColor(ofColor(180, 150, 255));
         }
     }
     
     ofBackground(10, 10, 10);
+    
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    ball.update();
+    time = ofGetElapsedTimef();
+    
+    // ball
+    if (time - time_b > 0.3) {
+        circle.push_back(*new Balls());
+        circle[circle.size() -1].setup();
+        time_b = time;
+    }
+
+    for (int i = 0; i < circle.size(); i++) {
+        if (*circle[i].boundNum == 5) {
+            circle.erase(circle.begin() + i);
+        }
+        circle[i].update();
+    }
+    
+//    balls.update();
+    balls.volume = ofSoundGetSpectrum(1);
+    
+    //mesh
     mesh.clearVertices();
-    ball.volume = ofSoundGetSpectrum(1);
     for (int i = 0; i < mesh_w; i++) {
         for (int j = 0; j < mesh_h; j++) {
-            float mesh_x = sin(i*0.1)*ball.volume[0]*400;
-            float mesh_y = sin(j*0.15)*ball.volume[0]*100;
+            float mesh_x = sin(i*0.1 + time*5)*balls.volume[0]*400;
+            float mesh_y = sin(j*0.15 + time)*balls.volume[0]*100;
             float mesh_z = mesh_x + mesh_y;
             mesh.addVertex(ofVec3f(i-mesh_w/2, j-mesh_h/2, mesh_z));
         }
@@ -50,7 +73,10 @@ void ofApp::update(){
 void ofApp::draw(){
     switch (mode) {
         case 0:
-            ball.draw();
+//            balls.draw();
+            for (int i = 0; i < circle.size(); i++) {
+                circle[i].draw();
+            }
             break;
             
         case 1:
@@ -59,7 +85,7 @@ void ofApp::draw(){
             ofRotateX(ofGetFrameNum());
             ofRotateY(ofGetFrameNum()/6);
             ofRotateZ(ofGetFrameNum()/4);
-            glPointSize(1.0);
+            glPointSize(2.0);
             glEnable(GL_POINT_SMOOTH);
             mesh.drawVertices();
             ofPopMatrix();

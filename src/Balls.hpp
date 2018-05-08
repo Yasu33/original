@@ -9,7 +9,7 @@
 #define Balls_hpp
 #include "ofMain.h"
 
-#define NUM 50
+#define NUM 15
 
 #include <stdio.h>
 
@@ -22,7 +22,6 @@ private:
     float speed_y[NUM]; //y軸方向のスピード
     float gravity; //重力
     float friction; //摩擦力
-    int boundNum[NUM]; //跳ね返った回数
     int color_r[NUM];
     int color_g[NUM];
     int color_b[NUM];
@@ -32,6 +31,7 @@ public:
     void update();
     void draw();
     
+    int boundNum[NUM]; //跳ね返った回数
     float *volume;
 
 

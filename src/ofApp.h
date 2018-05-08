@@ -1,7 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxProcessFFT.h"
 #include "Balls.hpp"
+#include <vector>
+#include <algorithm>
 
 class ofApp : public ofBaseApp{
 
@@ -25,11 +28,17 @@ class ofApp : public ofBaseApp{
     int mesh_w; //メッシュの幅
     int mesh_h; //メッシュの高さ
     int mode; //切り替え
+    float time; //今の時間
+    float time_b; //前の時間
+    
+    
+    vector <Balls> circle;
+    
     
     ofEasyCam cam;
     ofSoundPlayer music;
     ofMesh mesh;
     
-    Balls ball;
+    Balls balls;
 		
 };
