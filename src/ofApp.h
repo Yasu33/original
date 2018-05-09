@@ -40,5 +40,7 @@ class ofApp : public ofBaseApp{
     ofMesh mesh;
     
     Balls balls;
+    
+    ProcessFFT fft;
 		
 };

@@ -29,6 +29,10 @@ void ofApp::setup(){
         }
     }
     
+    fft.setup();
+    fft.setNumFFTBins(16);
+    fft.setNormalize(true);
+    
     ofBackground(10, 10, 10);
     
     
@@ -52,7 +56,6 @@ void ofApp::update(){
         circle[i].update();
     }
     
-//    balls.update();
     balls.volume = ofSoundGetSpectrum(1);
     
     //mesh
@@ -66,6 +69,7 @@ void ofApp::update(){
         }
     }
     
+    fft.update();
     
 }
 
@@ -73,13 +77,15 @@ void ofApp::update(){
 void ofApp::draw(){
     switch (mode) {
         case 0:
-//            balls.draw();
+        {
             for (int i = 0; i < circle.size(); i++) {
                 circle[i].draw();
             }
             break;
+        }
             
         case 1:
+        {
             cam.begin();
             ofPushMatrix();
             ofRotateX(ofGetFrameNum());
@@ -90,6 +96,20 @@ void ofApp::draw(){
             mesh.drawVertices();
             ofPopMatrix();
             cam.end();
+            break;
+        }
+            
+        case 2:
+        {
+            float lowValue = ofMap(fft.getLowVal(), 0, 1, 0, 256);
+            float midValue = ofMap(fft.getMidVal(), 0, 1, 0, 256);
+            float heighValue = ofMap(fft.getHighVal(), 0, 1, 0, 256);
+            ofSetColor(lowValue, midValue, heighValue);
+            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+            cout << lowValue << endl;
+            cout << midValue << endl;
+            break;
+        }
             
         default:
             break;
@@ -107,7 +127,9 @@ void ofApp::keyPressed(int key){
         case '1':
             mode = 1;
             break;
-            
+        case '2':
+            mode = 2;
+            break;
         default:
             break;
     }

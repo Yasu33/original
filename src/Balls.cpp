@@ -11,9 +11,7 @@ void Balls::setup(){
     
     gravity=0.30;
     friction=0.999;
-    
-    cout << ofSoundGetSpectrum(1)[0] << endl;
-    
+        
     for (int i = 0; i<NUM; i++) {
         circle_x[i] = ofRandom(20, ofGetWidth()-20); //円のx座標の初期値
         circle_y[i] = ofGetHeight() - ofSoundGetSpectrum(1)[0] * 10000; //円のy座標の初期値
