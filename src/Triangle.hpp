@@ -24,13 +24,15 @@ private:
     ofMesh triMesh;
     ofVec3f _center;
     vector<ofVec3f> pos;
+    vector<int> saturation;
+    vector<int> brightness;
     int size;
     
 public:
     void draw();
+    void color(int h);
+    int hue;
     float vol; //円の大きさ
     Triangle(ofVec3f center); //コンストラクタ　center:円の中心座標
-    ofFloatColor triColor;
-    
 
 };
