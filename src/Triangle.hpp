@@ -10,6 +10,8 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+#include <vector>
+
 
 
 //#define num 100
@@ -21,6 +23,8 @@ private:
     ofEasyCam cam; //3D
     ofMesh triMesh;
     ofVec3f _center;
+    vector<ofVec3f> pos;
+    int size;
     
 public:
     void draw();
