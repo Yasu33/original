@@ -12,10 +12,6 @@
 #include "ofMain.h"
 #include <vector>
 
-
-
-//#define num 100
-
 #endif /* Triangle_hpp */
 
 class Triangle{
