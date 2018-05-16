@@ -2,23 +2,28 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetFrameRate(64);
+    ofEnableAlphaBlending();
+    glEnable(GL_BLEND);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE);
+    ofEnableDepthTest();
+    ofBackground(10);
+    
+    //音楽
     music.load("革命のエチュード.mp3");
     music.setLoop(true);
     music.setVolume(1);
     music.play();
     
-    ofSetFrameRate(64);
-    ofEnableAlphaBlending();
-    ofEnableDepthTest();
-    
-    time_b = 0.0;
-    
-    
-    circle.push_back(*new Balls());
-    circle[0].setup();
-    
+    //画面切り替え
     mode = 0;
     
+    //ボールバウンド
+    time_b = 0.0;
+    circle.push_back(*new Balls());
+//    circle[0].setup();
+    
+    //mesh
     mesh_w = 256;
     mesh_h = 256;
     cam.setDistance(40);
@@ -29,36 +34,38 @@ void ofApp::setup(){
         }
     }
     
+    //triangle
+
+    triarray[0] = new Triangle(ofVec3f(0,0,40));
+    triarray[1] = new Triangle(ofVec3f(40*cos(PI/6),10,-20));
+    triarray[2] = new Triangle(ofVec3f(-40*cos(PI/6),-10,-20));
+    
+    //FFT解析
     fft.setup();
     fft.setNumFFTBins(16);
     fft.setNormalize(true);
-    
-    ofBackground(10, 10, 10);
-    
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    //時間取得
     time = ofGetElapsedTimef();
     
-    // ball
-    if (time - time_b > 0.3) {
+    // ボールバウンド
+    if (time - time_b > 0.4) {
         circle.push_back(*new Balls());
-        circle[circle.size() -1].setup();
         time_b = time;
     }
 
     for (int i = 0; i < circle.size(); i++) {
+        circle[i].update();
         if (*circle[i].boundNum == 5) {
             circle.erase(circle.begin() + i);
         }
-        circle[i].update();
     }
     
-    balls.volume = ofSoundGetSpectrum(1);
-    
     //mesh
+    balls.volume = ofSoundGetSpectrum(1);
     mesh.clearVertices();
     for (int i = 0; i < mesh_w; i++) {
         for (int j = 0; j < mesh_h; j++) {
@@ -69,23 +76,20 @@ void ofApp::update(){
         }
     }
     
+    //FFT解析
     fft.update();
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     switch (mode) {
-        case 0:
-        {
+        case 0: //ボールバウンド
             for (int i = 0; i < circle.size(); i++) {
                 circle[i].draw();
             }
             break;
-        }
             
-        case 1:
-        {
+        case 1: //mesh
             cam.begin();
             ofPushMatrix();
             ofRotateX(ofGetFrameNum());
@@ -97,19 +101,21 @@ void ofApp::draw(){
             ofPopMatrix();
             cam.end();
             break;
-        }
             
-        case 2:
-        {
-            float lowValue = ofMap(fft.getLowVal(), 0, 1, 0, 256);
-            float midValue = ofMap(fft.getMidVal(), 0, 1, 0, 256);
-            float heighValue = ofMap(fft.getHighVal(), 0, 1, 0, 256);
-            ofSetColor(lowValue, midValue, heighValue);
-            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-            cout << lowValue << endl;
-            cout << midValue << endl;
+        case 2: //triangle
+            lowValue = ofMap(fft.getLowVal(), 0, 1, 1, 3);
+            midValue = ofMap(fft.getMidVal(), 0, 1, 1, 3);
+            heighValue = ofMap(fft.getHighVal(), 0, 1, 1, 3);
+            triarray[0]->vol = lowValue;
+            triarray[0]->hue = ofMap(fft.getLowVal(), 0, 1, 0, 50);
+            triarray[0]->draw();
+            triarray[1]->vol = midValue;
+            triarray[1]->hue = ofMap(fft.getMidVal(), 0, 1, 60, 110);
+            triarray[1]->draw();
+            triarray[2]->vol = heighValue;
+            triarray[2]->hue = ofMap(fft.getHighVal(), 0, 1, 140, 190);
+            triarray[2]->draw();
             break;
-        }
             
         default:
             break;

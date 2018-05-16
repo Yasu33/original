@@ -1,8 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxProcessFFT.h"
+#include "ofxGui.h"
 #include "Balls.hpp"
+#include "Triangle.hpp"
+#include "ofxProcessFFT.h"
 #include <vector>
 #include <algorithm>
 
@@ -25,22 +27,29 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    int mesh_w; //メッシュの幅
-    int mesh_h; //メッシュの高さ
     int mode; //切り替え
-    float time; //今の時間
-    float time_b; //前の時間
-    
-    
-    vector <Balls> circle;
-    
-    
+    ofxPanel gui;
     ofEasyCam cam;
     ofSoundPlayer music;
-    ofMesh mesh;
     
+    //ballバウンド
+    float time; //今の時間
+    float time_b; //前の時間
+    vector<Balls> circle;
     Balls balls;
-    
+
+    //mesh
+    int mesh_w; //メッシュの幅
+    int mesh_h; //メッシュの高さ
+    ofMesh mesh;
+
+    //FFT解析
     ProcessFFT fft;
+    
+    //triangle
+    float lowValue; //低周波数の音量
+    float midValue; //中周波数の音量
+    float heighValue; //高周波数の音量
+    Triangle* triarray[3];
 		
 };

@@ -6,20 +6,19 @@
 //
 
 #include "Balls.hpp"
-
-void Balls::setup(){
+Balls::Balls(){
+    ofEnableAlphaBlending();
     
-    gravity=0.30;
+    gravity=0.25;
     friction=0.999;
-        
+    
     for (int i = 0; i<NUM; i++) {
         circle_x[i] = ofRandom(20, ofGetWidth()-20); //円のx座標の初期値
         circle_y[i] = ofGetHeight() - ofSoundGetSpectrum(1)[0] * 10000; //円のy座標の初期値
         speed_x[i] = ofRandom(-10, 10); //円のx軸方向のスピードの初期値
-        speed_y[i] = ofRandom(0,5); //円のy軸方向のスピードの初期値（自由落下）
-        color_r[i] = ofRandom(120,255);
-        color_g[i] = ofRandom(100,255);
-        color_b[i] = ofRandom(100,255);
+        speed_y[i] = ofRandom(0,5); //円のy軸方向のスピードの初期値
+        color_h[i] = ofRandom(0,255);
+        alpha[i] = 180;
         boundNum[i] = 0;
     }
 }
@@ -28,6 +27,7 @@ void Balls::update(){
     volume = ofSoundGetSpectrum(1);
     
     for(int i = 0; i<NUM ; i++){
+
         //スピードの更新
         speed_x[i] = speed_x[i] * friction;
         speed_y[i] = speed_y[i] * friction;
@@ -41,20 +41,29 @@ void Balls::update(){
         if(circle_x[i] < 0 || circle_x[i] > ofGetWidth()){
             speed_x[i] = -speed_x[i];
         }
+        
         if (circle_y[i] >= ofGetHeight()) {
-            circle_y[i] = ofGetHeight();
             speed_y[i] = -speed_y[i] * 0.8;
             boundNum[i] = boundNum[i] + 1;
+            circle_y[i] = ofGetHeight();
         }
         
+        alpha[i] = 180 - boundNum[i]*45;
+
     }
 }
 
 void Balls::draw(){
+//    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+//    ofEnableAlphaBlending();
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+//    ofDisableBlendMode();
+//    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE);
     for (int i = 0; i<NUM; i++) {
         if (boundNum[i] < 4) {
-            ofSetColor(color_r[i], color_g[i], color_b[i], 180-boundNum[i]*30); //円の色の設定
+//            ofEnableAlphaBlending();
             circle_r[i] = volume[0]*500; //円の半径の設定
+            ofSetColor(ofColor::fromHsb(color_h[i], 255, 255, alpha[i]));
             ofDrawCircle(circle_x[i], circle_y[i], circle_r[i]); //円の描画
         }
     }

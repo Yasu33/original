@@ -22,20 +22,17 @@ private:
     float speed_y[NUM]; //y軸方向のスピード
     float gravity; //重力
     float friction; //摩擦力
-    int color_r[NUM];
-    int color_g[NUM];
-    int color_b[NUM];
+    int color_h[NUM];
+    int alpha[NUM];
     
 public:
-    void setup();
     void update();
     void draw();
     
     int boundNum[NUM]; //跳ね返った回数
     float *volume;
 
-
-    
+    Balls();
 };
 
 #endif /* Balls_hpp */
