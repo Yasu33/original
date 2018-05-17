@@ -25,7 +25,6 @@ private:float circle_r[N]; //円の半径
     int color_h[N];
     int color_s[N];
     int alpha[N];
-    ofEasyCam cam;
 public:
     void update();
     void draw();

@@ -5,10 +5,10 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofEnableAlphaBlending();
     ofEnableDepthTest();
-    ofBackground(20);
+    ofBackground(255);
     
     //音楽
-    music.load("革命のエチュード.mp3");
+    music.load("スペイン舞曲.mp3");
     music.setLoop(true);
     music.setVolume(1);
     music.play();
@@ -23,7 +23,6 @@ void ofApp::setup(){
     //mesh
     mesh_w = 256;
     mesh_h = 256;
-    cam.setDistance(40);
     
     for (int i = 0; i<mesh_w; i++) {
         for (int j = 0; j<mesh_h; j++) {
@@ -51,14 +50,13 @@ void ofApp::update(){
     switch (mode) {
         case 0:
             // ボールバウンド
-            if (time - time_b > 0.4) {
+            if (time - time_b > 0.3) {
                 alball.push_back(*new AlphaBall());
                 time_b = time;
             }
-            cout<<alball.size()<<endl;
             for (int i = 0; i < alball.size(); i++) {
                 alball[i].update();
-                if (*alball[i].boundNum == 4) {
+                if (*alball[i].boundNum == 3) {
                     alball.erase(alball.begin() + i);
                 }
             }
@@ -91,12 +89,17 @@ void ofApp::update(){
 void ofApp::draw(){
     switch (mode) {
         case 0: //ボールバウンド
+            cam.setDistance(650);
+            cam.begin();
             for (int i = 0; i < alball.size(); i++) {
                 alball[i].draw();
             }
+            cam.begin();
             break;
             
         case 1: //mesh
+            ofPushView();
+            cam.setDistance(40);
             cam.begin();
             ofPushMatrix();
             ofRotateX(ofGetFrameNum());
@@ -107,6 +110,7 @@ void ofApp::draw(){
             mesh.drawVertices();
             ofPopMatrix();
             cam.end();
+            ofPopView();
             break;
             
         case 2: //triangle
@@ -133,6 +137,15 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    if (key == 'a') {
+        for (int i = 0; i<235; i++) {
+            ofBackground(255-i);
+        }
+        ofBackground(20);
+    }
+    if (key == 's') {
+        ofBackground(255);
+    }
     switch (key) {
         case '0':
             mode = 0;

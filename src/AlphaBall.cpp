@@ -9,12 +9,12 @@
 AlphaBall::AlphaBall(){
     ofEnableAlphaBlending();
 
-    gravity=-0.25;
+    gravity=-0.27;
     friction=0.999;
 
     for (int i = 0; i<N; i++) {
         circle_x[i] = ofRandom(-ofGetWidth()/2+20, ofGetWidth()/2-20); //円のx座標の初期値
-        circle_y[i] = -ofGetHeight()/2 + ofSoundGetSpectrum(1)[0] * 10000; //円のy座標の初期値
+        circle_y[i] = -ofGetHeight()/2 + ofSoundGetSpectrum(1)[0] * 7000; //円のy座標の初期値
         circle_z[i] = i;
         speed_x[i] = ofRandom(-8, 8); //円のx軸方向のスピードの初期値
         speed_y[i] = ofRandom(-5,0); //円のy軸方向のスピードの初期値
@@ -27,8 +27,6 @@ AlphaBall::AlphaBall(){
 }
 
 void AlphaBall::update(){
-    volume = ofSoundGetSpectrum(1);
-    
     for(int i = 0; i<N ; i++){
         
         //スピードの更新
@@ -56,7 +54,7 @@ void AlphaBall::update(){
 }
 
 void AlphaBall::draw(){
-    cam.begin();
+    volume=ofSoundGetSpectrum(1);
     for (int i = 0; i<N; i++) {
         if (boundNum[i] < 4) {
             circle_r[i] = volume[0]*500; //円の半径の設定
@@ -64,5 +62,4 @@ void AlphaBall::draw(){
             ofDrawCircle(circle_x[i], circle_y[i], circle_z[i], circle_r[i]); //円の描画
         }
     }
-    cam.end();
 }

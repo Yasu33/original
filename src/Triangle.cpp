@@ -8,7 +8,8 @@
 #include "Triangle.hpp"
 Triangle::Triangle(ofVec3f center){
     _center = center;
-    triMesh = ofSpherePrimitive(1000, 12).getMesh(); //meshを作成
+
+    triMesh = ofSpherePrimitive(1000, 25).getMesh(); //meshを作成
     size = triMesh.getVertices().size();
 
     for (int i = 0; i < size; i++) {
