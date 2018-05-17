@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		007F713E619B81D821BEA319 /* ofxFftBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE67198F2891A8FFEA3686E6 /* ofxFftBasic.cpp */; };
 		0686C38EE993C67B96002FA1 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B053B6F1252BCFCFF0F59AC /* kiss_fft.c */; };
+		1C0D4A7120AD288F00C81EDB /* AlphaBall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D4A6F20AD288F00C81EDB /* AlphaBall.cpp */; };
 		1C8CAD3920A3380A001404D7 /* fftw3f.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C8CAD3820A33809001404D7 /* fftw3f.a */; };
 		1C8CAD3F20A6749F001404D7 /* Triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C8CAD3D20A6749F001404D7 /* Triangle.cpp */; };
 		1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
@@ -63,6 +64,8 @@
 		0A1DAC09F322AE313A40706D /* ofxToggle.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxToggle.h; path = ../../../addons/ofxGui/src/ofxToggle.h; sourceTree = SOURCE_ROOT; };
 		15F2C6477A769C03A56D1401 /* ofxSlider.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSlider.cpp; path = ../../../addons/ofxGui/src/ofxSlider.cpp; sourceTree = SOURCE_ROOT; };
 		17E65988300FBD9AAA2CD0CA /* ofxGui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGui.h; path = ../../../addons/ofxGui/src/ofxGui.h; sourceTree = SOURCE_ROOT; };
+		1C0D4A6F20AD288F00C81EDB /* AlphaBall.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaBall.cpp; sourceTree = "<group>"; };
+		1C0D4A7020AD288F00C81EDB /* AlphaBall.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AlphaBall.hpp; sourceTree = "<group>"; };
 		1C0DA2561397A7DE0246858B /* ofxGuiGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGuiGroup.h; path = ../../../addons/ofxGui/src/ofxGuiGroup.h; sourceTree = SOURCE_ROOT; };
 		1C8CAD3820A33809001404D7 /* fftw3f.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = fftw3f.a; sourceTree = "<group>"; };
 		1C8CAD3D20A6749F001404D7 /* Triangle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle.cpp; sourceTree = "<group>"; };
@@ -255,6 +258,8 @@
 				3BE34B49D775026D41E434A0 /* Balls.cpp */,
 				1C8CAD3D20A6749F001404D7 /* Triangle.cpp */,
 				1C8CAD3E20A6749F001404D7 /* Triangle.hpp */,
+				1C0D4A6F20AD288F00C81EDB /* AlphaBall.cpp */,
+				1C0D4A7020AD288F00C81EDB /* AlphaBall.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -371,6 +376,7 @@
 				7A61C288AE942E5885881232 /* ofxEasyFft.cpp in Sources */,
 				29938E05AF78B3DF7A591187 /* ofxFftw.cpp in Sources */,
 				007F713E619B81D821BEA319 /* ofxFftBasic.cpp in Sources */,
+				1C0D4A7120AD288F00C81EDB /* AlphaBall.cpp in Sources */,
 				47741AD4D543009E4DF29CEA /* ofxProcessFFT.cpp in Sources */,
 				0686C38EE993C67B96002FA1 /* kiss_fft.c in Sources */,
 				6DB9E3911BA6216FE1F0E91C /* kiss_fftr.c in Sources */,
@@ -551,6 +557,7 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,

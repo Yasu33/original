@@ -2,8 +2,8 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
-#include "Balls.hpp"
 #include "Triangle.hpp"
+#include "AlphaBall.hpp"
 #include "ofxProcessFFT.h"
 #include <vector>
 #include <algorithm>
@@ -16,16 +16,6 @@ class ofApp : public ofBaseApp{
 		void draw();
 
 		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
     
     int mode; //切り替え
     ofxPanel gui;
@@ -35,9 +25,9 @@ class ofApp : public ofBaseApp{
     //ballバウンド
     float time; //今の時間
     float time_b; //前の時間
-    vector<Balls> circle;
-    Balls balls;
-
+    AlphaBall alphaball;
+    vector<AlphaBall> alball;
+    
     //mesh
     int mesh_w; //メッシュの幅
     int mesh_h; //メッシュの高さ
@@ -51,5 +41,7 @@ class ofApp : public ofBaseApp{
     float midValue; //中周波数の音量
     float heighValue; //高周波数の音量
     Triangle* triarray[3];
+    
+
 		
 };

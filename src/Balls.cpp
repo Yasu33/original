@@ -61,9 +61,9 @@ void Balls::draw(){
 //    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE);
     for (int i = 0; i<NUM; i++) {
         if (boundNum[i] < 4) {
-//            ofEnableAlphaBlending();
+            ofEnableAlphaBlending();
             circle_r[i] = volume[0]*500; //円の半径の設定
-            ofSetColor(ofColor::fromHsb(color_h[i], 255, 255, alpha[i]));
+            ofSetColor(color_h[i], 255, 255, 120);
             ofDrawCircle(circle_x[i], circle_y[i], circle_r[i]); //円の描画
         }
     }
