@@ -8,7 +8,7 @@ void ofApp::setup(){
     ofBackground(255);
     
     //音楽
-    music.load("スペイン舞曲.mp3");
+    music.load("スペイン舞曲shortver.mp3");
     music.setLoop(true);
     music.setVolume(1);
     music.play();
@@ -98,13 +98,14 @@ void ofApp::draw(){
             break;
             
         case 1: //mesh
+            ofBackground(20);
             ofPushView();
             cam.setDistance(40);
             cam.begin();
             ofPushMatrix();
             ofRotateX(ofGetFrameNum());
-            ofRotateY(ofGetFrameNum()/6);
-            ofRotateZ(ofGetFrameNum()/4);
+            ofRotateY(ofGetFrameNum()/5);
+            ofRotateZ(ofGetFrameNum()/3);
             glPointSize(2.0);
             glEnable(GL_POINT_SMOOTH);
             mesh.drawVertices();
@@ -118,6 +119,7 @@ void ofApp::draw(){
             midValue = ofMap(fft.getMidVal(), 0, 1, 1, 3);
             heighValue = ofMap(fft.getHighVal(), 0, 1, 1, 3);
             triarray[0]->vol = lowValue;
+            cout << fft.getLowVal() << endl;
             triarray[0]->hue = ofMap(fft.getLowVal(), 0, 1, 0, 50);
             triarray[0]->draw();
             triarray[1]->vol = midValue;
